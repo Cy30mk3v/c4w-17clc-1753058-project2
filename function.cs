@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
+ 
 
 namespace Student_Management
 {
@@ -29,17 +30,20 @@ namespace Student_Management
             //var hashed = new System.Security.Cryptography.HashAlgorithm();
             
 
-            if(hashPassword(textBox2.Text)==hashPassword("Password"))
+            if(hashPassword(textBox2.Text)==hashPassword("123"))
             {
                 return true;
             }
             return false;
         }
 
-        public void readCSV(string path)
+        public void connectDB()
         {
-            var reader = new StreamReader(path);
             
         }
+
+       
+
+        //public void 
     }
 }

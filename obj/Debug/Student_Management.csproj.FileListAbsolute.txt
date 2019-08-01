@@ -8,3 +8,4 @@ C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.exe
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.pdb
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.Form1.resources
+C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.Teacher.resources

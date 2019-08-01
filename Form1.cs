@@ -16,6 +16,8 @@ namespace Student_Management
         {
             InitializeComponent();
             this.Text="Student management 17CLC1";
+
+            this.label1.Font = new Font("Arial", 20);
             textBox2.PasswordChar = '*';
         }
 
@@ -36,9 +38,17 @@ namespace Student_Management
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if(!checkPassWord())
+            if (!checkPassWord())
             {
                 MessageBox.Show("Please check your username or password");
+            }
+            else
+            {
+                //this.Close();
+                Teacher form_T = new Teacher();
+                form_T.ShowDialog();
+
+                //Password
             }
         }
 
