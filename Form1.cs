@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Student_Management.DTO;
+using Student_Management.BS;
+
 
 namespace Student_Management
 {
@@ -51,7 +54,20 @@ namespace Student_Management
                 //Password
             }
         }
+          
+        private void addStudentListToView(ListView list,List<Student> students)
+        {
+            foreach(var student in students)
+            {
+                ListViewItem temp = new ListViewItem(student.ID.ToString());
+                temp.SubItems.Add(student.StudentID.ToString());
+                temp.SubItems.Add(student.Name);
+                temp.SubItems.Add(student.Gender.ToString());
+                temp.SubItems.Add(student.Social_ID);
+                list.Items.Add(temp);
 
+            }
+        }
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             

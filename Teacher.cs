@@ -107,7 +107,6 @@ namespace Student_Management
                 if (rd.GetString(3).Equals("M"))
                 {
                     item.SubItems.Add("Nam");
-                    Console.WriteLine(rd.GetString(3));
                 }
                 else
                 {
