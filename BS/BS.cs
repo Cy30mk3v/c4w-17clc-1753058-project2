@@ -54,5 +54,19 @@ namespace Student_Management.BS
             }
             return false;
         }
+
+        public bool checkClassInDB(string Class)
+        {
+            List<Class> classes = new List<Class>();
+            classes = Report.GetClassFromDB();
+            foreach (Class c in classes)
+            {
+                if (c.Name == Class)
+                    return true;
+            }
+            return false;
+        }
+
+
     }
 }

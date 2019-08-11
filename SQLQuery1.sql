@@ -7,7 +7,7 @@ CREATE TABLE Student
 	ID INT IDENTITY(1,1),
 	StudentID INT,
 	Name NVARCHAR(255),
-	Gender CHAR, CHECK (Gender ='F' or Gender ='M'),
+	Gender CHAR, CHECK (Gender ='F' or Gender ='M' or Gender = 'N'),
 	Social_ID NVARCHAR(10),
 	Class NVARCHAR(255),
 	PRIMARY KEY(StudentID,Social_ID),
@@ -30,4 +30,4 @@ INSERT INTO Student (StudentID,Name,Gender,Social_ID) VALUES (1742002,N'Trần V
 INSERT INTO Accounts (UserName,PassWord) values ('giaovu','giaovu');
 
 DROP TABLE Student
-SELECT * FROM Account
+SELECT * FROM Student

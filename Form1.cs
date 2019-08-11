@@ -25,6 +25,7 @@ namespace Student_Management
 
             //this.label1.Font = new Font("Arial", 20);
             textBox2.PasswordChar = '*';
+            this.Icon = Student_Management.Properties.Resources._1_28_512;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -61,16 +62,23 @@ namespace Student_Management
             }
             else
             {
-                Teacher t = new Teacher();
-                newLogin();
-                t.ShowDialog();
+                if (username == "giaovu")
+                {
+                    Teacher_form t = new Teacher_form();
+                    newLogin();
+                    t.ShowDialog();
+                }
+                else
+                {
+
+                }
             }
         }
 
 
         private void addStudentListToView(ListView list,List<Student> students)
         {
-            foreach(var student in students)
+            foreach(Student student in students)
             {
                 ListViewItem temp = new ListViewItem(student.ID.ToString());
                 temp.SubItems.Add(student.StudentID.ToString());

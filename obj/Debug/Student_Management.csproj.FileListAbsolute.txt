@@ -1,5 +1,4 @@
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.Form1.resources
-C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.Teacher.resources
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.Properties.Resources.resources
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.csproj.GenerateResource.cache
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.csproj.CoreCompileInputs.cache
@@ -19,3 +18,6 @@ C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.
 C:\Users\ThinkKING\source\repos\Student_Management\bin\Debug\DAL.dll
 C:\Users\ThinkKING\source\repos\Student_Management\bin\Debug\DAL.pdb
 C:\Users\ThinkKING\source\repos\Student_Management\bin\Debug\DAL.dll.config
+C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.AddStudent.resources
+C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.Student_form.resources
+C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.Teacher_form.resources

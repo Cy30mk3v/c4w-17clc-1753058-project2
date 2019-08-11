@@ -60,11 +60,23 @@
     <Compile Include="AddElement.Designer.cs">
       <DependentUpon>AddElement.cs</DependentUpon>
     </Compile>
-    <Compile Include="Teacher.cs">
+    <Compile Include="AddStudent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Teacher.Designer.cs">
-      <DependentUpon>Teacher.cs</DependentUpon>
+    <Compile Include="AddStudent.Designer.cs">
+      <DependentUpon>AddStudent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Student_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Student_form.Designer.cs">
+      <DependentUpon>Student_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Teacher_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Teacher_form.Designer.cs">
+      <DependentUpon>Teacher_form.cs</DependentUpon>
     </Compile>
     <Compile Include="function.cs">
       <SubType>Form</SubType>
@@ -77,11 +89,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddStudent.resx">
+      <DependentUpon>AddStudent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Teacher.resx">
-      <DependentUpon>Teacher.cs</DependentUpon>
+    <EmbeddedResource Include="Student_form.resx">
+      <DependentUpon>Student_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Teacher_form.resx">
+      <DependentUpon>Teacher_form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -122,6 +140,15 @@
       <Project>{0e957602-ac3a-4bb4-9cf4-85f0845d1e3a}</Project>
       <Name>DTO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1-28-512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1-28-512.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
