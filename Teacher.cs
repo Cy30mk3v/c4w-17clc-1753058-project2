@@ -35,8 +35,12 @@ namespace Student_Management
             open.InitialDirectory = "C:\\";
             open.ShowDialog();
             string path = open.FileName;
+            if (path == null)
+            {
+                return;
+            }
             FileInfo fi = new FileInfo(path);
-            
+           
             if (Path.GetExtension(path) != ".csv")
             {
                 MessageBox.Show("Not csv file!");
@@ -106,11 +110,11 @@ namespace Student_Management
                 Console.WriteLine(rd.GetString(3));
                 if (rd.GetString(3).Equals("M"))
                 {
-                    item.SubItems.Add("Nam");
+                    item.SubItems.Add("M");
                 }
                 else
                 {
-                    item.SubItems.Add("Nữ");
+                    item.SubItems.Add("F");
                 }
                 item.SubItems.Add(rd.GetString(4));
                 listView1.Items.Add(item);
@@ -118,6 +122,23 @@ namespace Student_Management
             conn.Close();
             //return results;
 
+        }
+
+        private void Teacher_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            
+           
         }
     }
 }

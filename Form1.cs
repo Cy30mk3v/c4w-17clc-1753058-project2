@@ -9,18 +9,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Student_Management.DTO;
 using Student_Management.BS;
+using Student_Management.DAL;
 
 
 namespace Student_Management
 {
     public partial class Form1 : Form
     {
+        public string username { get; set; }
+        public string password { get; set; }
         public Form1()
         {
             InitializeComponent();
             this.Text="Student management 17CLC1";
 
-            this.label1.Font = new Font("Arial", 20);
+            //this.label1.Font = new Font("Arial", 20);
             textBox2.PasswordChar = '*';
         }
 
@@ -39,22 +42,32 @@ namespace Student_Management
 
         }
 
+        void newLogin()
+        {
+            textBox1.Clear();
+            textBox2.Clear();
+        }
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (!checkPassWord())
+            username = textBox1.Text;
+            password = textBox2.Text;
+            List<Account> accounts = new List<Account>();
+            accounts = Report.GetAccountsFromDB();
+
+            Business b = new Business();
+            if (!Business.checkPassword(username, password))
             {
-                MessageBox.Show("Please check your username or password");
+                MessageBox.Show("Please check your username or password!");
             }
             else
             {
-                //this.Close();
-                Teacher form_T = new Teacher();
-                form_T.ShowDialog();
-
-                //Password
+                Teacher t = new Teacher();
+                newLogin();
+                t.ShowDialog();
             }
         }
-          
+
+
         private void addStudentListToView(ListView list,List<Student> students)
         {
             foreach(var student in students)
