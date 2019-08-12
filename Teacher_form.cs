@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Student_Management.DTO;
 using Student_Management.DAL;
+using Student_Management.BS;
 
 
 namespace Student_Management
@@ -41,14 +42,14 @@ namespace Student_Management
             
             OpenFileDialog open = new OpenFileDialog();
             open.InitialDirectory = "C:\\";
-            open.ShowDialog();
+            var a=open.ShowDialog();
             string path = open.FileName;
-            if (path == null)
+            if (path == null || a!=DialogResult.OK)
             {
                 return;
             }
             FileInfo fi = new FileInfo(path);
-            Console.WriteLine("Button1");
+            //Console.WriteLine("Button1");
             if (Path.GetExtension(path) != ".csv")
             {
                 MessageBox.Show("Not csv file!");
@@ -57,25 +58,28 @@ namespace Student_Management
             {
                
 
-                listView1.Items.Clear();
+                //listView1.Items.Clear();
                 List<Student> students = new List<Student>();
-                students = Report.GetStudents(path);
-               foreach (Student s in students)
+                if (Business.checkCSV(path) == Business.Student_list)
                 {
+                    students = Report.GetStudents(path);
+                    Report.addClassToDB(students[0].Class);
+                    //Console.WriteLine("Success in f");
+                    foreach (Student s in students)
+                    {
+                        //Console.WriteLine(s.StudentID);
+                        Report.addStudentToDB(s);
 
-                    ListViewItem temp = new ListViewItem();
-                    temp = addStudentToLV(s);
-                    listView1.Items.Add(temp);
-                    
+                    }
                 }
-                listView1.Update();
+                //listView1.Update();
             }
             
         }
 
-        public ListViewItem addStudentToLV(Student S)
+        public ListViewItem addStudentToLV(Student S, int i)
         {
-            ListViewItem item = new ListViewItem(S.ID.ToString());
+            ListViewItem item = new ListViewItem(i.ToString());
             item.SubItems.Add(S.StudentID.ToString());
             item.SubItems.Add(S.Name);
             item.SubItems.Add(S.Gender.ToString());
@@ -93,35 +97,20 @@ namespace Student_Management
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
-            conn.Open();
-
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
-            cmd.CommandText = "select * from Student";
-
-            OleDbDataReader rd = cmd.ExecuteReader();
+            
             listView1.Items.Clear();
-            while (rd.Read())
+            List <Student> students= new List<Student>();
+            students = Report.GetStudentFromDB();
+            int i = 1;
+            foreach(Student S in students)
             {
                 var item = new ListViewItem();
-                item.Text = rd.GetInt32(0).ToString();
-                item.SubItems.Add(rd.GetInt32(1).ToString());
-                item.SubItems.Add(rd.GetString(2));
-                Console.WriteLine(rd.GetString(3));
-                if (rd.GetString(3).Equals("M"))
-                {
-                    item.SubItems.Add("M");
-                }
-                else
-                {
-                    item.SubItems.Add("F");
-                }
-                item.SubItems.Add(rd.GetString(4));
+                item = addStudentToLV(S,i);
+                i++;
+                
                 listView1.Items.Add(item);
             }
-            conn.Close();
+            listView1.Update();
             //return results;
 
         }
@@ -150,18 +139,35 @@ namespace Student_Management
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Student S = new Student();
-            S.Name = "Hung";
-            S.Gender = 'M';
-            S.StudentID = 1234567;
-            S.Social_ID = "1211212";
-            Report.addStudentToDB(S);
+            AddStudent add = new AddStudent();
+            add.ShowDialog();
+            Student S1 = new Student();
+            S1 = add.S;
+            if(S1.StudentID==default(int))
+            {
+                return;
+            }
+            if(Business.checkStudentInDB(S1.StudentID))
+            {
+                MessageBox.Show("This student already existed!");
+                return;
+
+            }
+            Report.addStudentToDB(S1);
         }
 
         private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(comboBox2.Text=="Student list" || comboBox2.Text == "Time-table list")
             {
+                List<Class> classes = new List<Class>();
+                classes = Report.GetClassFromDB();
+                foreach(Class C in classes)
+                {
+                    comboBox1.Items.Add(C.Name);
+                }
+                comboBox1.Items.Add("All");
+                
                 label3.Hide();
                 label3.Enabled = false;
                 comboBox3.Hide();
@@ -174,6 +180,39 @@ namespace Student_Management
                 label3.Enabled = true;
                 comboBox3.Show();
                 comboBox3.Enabled = true;
+            }
+        }
+
+        private void Button4_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button6_Click(object sender, EventArgs e)
+        {
+            if (comboBox2.Text == "Student list")
+            {
+                List<Student> students = new List<Student>();
+                if (comboBox1.Text == "All")
+                {
+                    students = Report.GetStudentFromDB();
+                }
+                else
+                {
+                    students = Report.GetStudentFromDB_Class(comboBox1.Text);
+                }
+
+                listView1.Items.Clear();
+                int i = 1;
+                foreach (Student S in students)
+                {
+                    var item = new ListViewItem();
+                    item = addStudentToLV(S,i);
+                    i++;
+
+                    listView1.Items.Add(item);
+                }
+                listView1.Update();
             }
         }
     }

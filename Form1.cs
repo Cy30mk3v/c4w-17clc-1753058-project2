@@ -122,5 +122,20 @@ namespace Student_Management
                 Button1_Click(sender, e);
             }
         }
+
+        private void Label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

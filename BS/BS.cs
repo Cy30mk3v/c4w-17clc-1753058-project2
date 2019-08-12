@@ -7,13 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
 
 
 namespace Student_Management.BS
 {
+    
     public class Business
     {
-        public string hashPassword(string value)
+        public const int Student_list = 1;
+        public const int Time_table_list = 2;
+        public const int Class_Course_list = 3;
+        public const int Grade_list = 4;
+            public string hashPassword(string value)
         {
             SHA1 h = new SHA1CryptoServiceProvider();
             byte[] temp;
@@ -43,7 +50,7 @@ namespace Student_Management.BS
             return false;
         }
 
-        public bool checkStudentInDB(int StudentID)
+        static public bool checkStudentInDB(int StudentID)
         {
             List<Student> students = new List<Student>();
             students = Report.GetStudentFromDB();
@@ -53,6 +60,38 @@ namespace Student_Management.BS
                     return true;
             }
             return false;
+        }
+
+        static public int checkCSV(string path)
+        {
+            StreamReader sr = new StreamReader(path);
+            string line;
+            line = sr.ReadLine();
+            var split = line.Split(',');
+            line = sr.ReadLine();
+            Console.WriteLine(split.Count().ToString());
+            if (split[0].Contains("-"))
+            {
+                if (split.Count() == 7)
+                {
+                    return Grade_list;
+                }
+                else
+                {
+                    return Class_Course_list;
+                }
+            }
+            else
+            {
+                if (split.Count() == 5)
+                {
+                    return Student_list;
+                }
+                else
+                {
+                    return Time_table_list;
+                }
+            }
         }
 
         public bool checkClassInDB(string Class)

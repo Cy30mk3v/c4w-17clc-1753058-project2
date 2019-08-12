@@ -20,7 +20,9 @@ namespace Student_Management.DTO
         public char Gender { get; set; }
         public string Social_ID { get; set; }
 
-        public Class @class { get; set; }
+        public string Class { get; set; }
+
+        public string Courses { get; set; }
 
     }
 
