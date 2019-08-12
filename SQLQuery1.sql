@@ -10,6 +10,7 @@ CREATE TABLE Student
 	Gender CHAR, CHECK (Gender ='F' or Gender ='M' or Gender = 'N'),
 	Social_ID NVARCHAR(10),
 	Class NVARCHAR(255),
+	Courses NVARCHAR(255),
 	PRIMARY KEY(StudentID,Social_ID),
 )
 
