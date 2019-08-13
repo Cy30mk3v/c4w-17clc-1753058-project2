@@ -1,6 +1,6 @@
-﻿CREATE DATABASE StudentManagement
-GO 
-USE StudentManagement;
+﻿	CREATE DATABASE StudentManagement
+	GO 
+	USE StudentManagement;
 
 CREATE TABLE Student
 (
@@ -27,23 +27,53 @@ CREATE TABLE Class
 
 CREATE TABLE Course
 (
-	codeName NVARCHAR(255) UNIQUE,
+	ID INT IDENTITY (1,1),
+	codeName NVARCHAR(15),
 	FullName NVARCHAR(255),
-	Room NVARCHAR(255)
+	Room NVARCHAR(255),
+	Class NVARCHAR(15),
+	PRIMARY KEY(CodeName,Class),
 )
 
 CREATE TABLE Grade
 (
+	ID INT IDENTITY(1,1),
 	StudentID INT,
 	CodeCourse NVARCHAR(255),
+	Mid_Term FLOAT DEFAULT 0,
+	Final_Term FLOAT DEFAULT 0,
+	Other_Grade FLOAT DEFAULT 0,
+	Sum_Grade FLOAT DEFAULT 0,
 
 )
-INSERT INTO Student (StudentID,Name,Gender,Social_ID) VALUES (1742001,N'Nguyễn Văn A','M','123456789');
-INSERT INTO Student (StudentID,Name,Gender,Social_ID) VALUES (1742002,N'Trần Văn B','M','234567891');
+
+
+
+
 
 
 INSERT INTO Accounts (UserName,PassWord) values ('giaovu','giaovu');
 
 DROP TABLE Student
+DROP TABLE Course
+DROP TABLE Grade
 SELECT * FROM Student
-SELECT * FROM Class
+SELECT * FROM Course
+SELECT * FROM Grade
+x
+use master;
+drop database StudentManagement
+
+--Lấy sinh viên có học ở lớp 18CLC1 và môn CTT011
+SELECT Student.* 
+FROM Student, Grade
+WHERE Student.Class='17CLC1' AND Student.StudentID=Grade.StudentID AND Grade.CodeCourse ='CTT011'
+	
+INSERT INTO Grade(StudentID, CodeCourse)	
+SELECT Student.StudentID,Course.codeName
+FROM Student,Course 
+WHERE Student.Class = Course.Class AND NOT EXISTS (SELECT G.StudentID,G.CodeCourse
+													FROM Grade G
+													WHERE G.StudentID = Student.StudentID AND G.CodeCourse = Course.codeName)
+GROUP BY codeName,Student.ID,Student.StudentID
+HAVING Student.ID=MAX(Student.ID)

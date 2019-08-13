@@ -36,6 +36,28 @@ namespace Student_Management.DTO
     {
         public string Name { get; set; }
     }
+
+    public class Course
+    {
+        public int ID { get; set; }
+
+        public string codeName { get; set; }
+        public string FullName { get; set; }
+        public string room { get; set; }
+        public string Class { get; set; }
+    }
+
+    public class Grade
+    {
+
+        public int ID { get; set; }
+        public int StudentID { get; set; }
+        public string CodeCourse{ get; set; }
+        public float Mid_Term { get; set; }
+        public float Final_Term { get; set; }
+        public float Other_grade { get; set; }
+        public float Sum_Grade { get; set; }
+    }
 }
 
    

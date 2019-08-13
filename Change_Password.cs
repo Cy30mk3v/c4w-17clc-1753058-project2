@@ -12,7 +12,7 @@ namespace Student_Management
 {
     public partial class Change_Password : Form
     {
-        public Change_Password()
+        public Change_Password(string username,string password)
         {
             InitializeComponent();
         }

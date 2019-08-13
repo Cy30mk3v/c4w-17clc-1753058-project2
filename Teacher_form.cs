@@ -59,9 +59,10 @@ namespace Student_Management
                
 
                 //listView1.Items.Clear();
-                List<Student> students = new List<Student>();
+                
                 if (Business.checkCSV(path) == Business.Student_list)
                 {
+                    List<Student> students = new List<Student>();
                     students = Report.GetStudents(path);
                     Report.addClassToDB(students[0].Class);
                     //Console.WriteLine("Success in f");
@@ -70,6 +71,17 @@ namespace Student_Management
                         //Console.WriteLine(s.StudentID);
                         Report.addStudentToDB(s);
 
+                    }
+                }
+                if(Business.checkCSV(path)==Business.Time_table_list)
+                {
+                    List<Course> courses = new List<Course>();
+                    courses = Report.GetCourse(path);
+                    
+                    foreach(Course temp in courses)
+                    {
+                        Console.WriteLine(temp.codeName + " " + temp.FullName + " " + temp.room + " " + temp.Class);
+                        Report.addCourseToDB(temp);
                     }
                 }
                 //listView1.Update();
@@ -84,6 +96,16 @@ namespace Student_Management
             item.SubItems.Add(S.Name);
             item.SubItems.Add(S.Gender.ToString());
             item.SubItems.Add(S.Social_ID);
+            return item;
+        }
+
+        public ListViewItem addCourseToLV(Course S, int i)
+        {
+            ListViewItem item = new ListViewItem(i.ToString());
+            item.SubItems.Add(S.codeName);
+            item.SubItems.Add(S.FullName);
+            item.SubItems.Add(S.room);
+           
             return item;
         }
         public void addStudent()
@@ -158,10 +180,46 @@ namespace Student_Management
 
         private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboBox2.Text=="Student list" || comboBox2.Text == "Time-table list")
+            listView1.Items.Clear();
+            comboBox1.Items.Clear();
+            if (comboBox2.Text=="Student list" || comboBox2.Text == "Time-table list")
             {
+                
                 List<Class> classes = new List<Class>();
-                classes = Report.GetClassFromDB();
+                if(comboBox2.Text=="Student list")
+                {
+                    classes = Report.GetClassFromDB();
+                    
+                    if(listView1.Columns.Count!=5)
+                    {
+                        listView1.Columns[1].Text = "MSSV";
+                        listView1.Columns[2].Text= "Họ và Tên";
+                        listView1.Columns[3].Text="Giới tính";
+                        listView1.Columns[4].Text = "CMND";
+                        listView1.Columns[5].Width = 0;
+                        listView1.Columns[6].Width = 0;
+                        //listView1.Columns[7].Width = 0;
+                        listView1.Update();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("a");
+                    //if(listView1.Columns.Count)
+                    if (listView1.Columns.Count != 4)
+                    {
+                        classes = Report.GetClassFromDB_Course();
+                        listView1.Columns[1].Text = "Mã môn";
+                        listView1.Columns[2].Text = "Tên môn";
+                        listView1.Columns[3].Text = "Phòng học";
+                        listView1.Columns[4].Width = 0;
+                        listView1.Columns[5].Width = 0;
+                        listView1.Columns[6].Width = 0;
+                        // listView1.Columns[7].Width = 0;
+                        listView1.Update();
+                    }
+                   
+                }
                 foreach(Class C in classes)
                 {
                     comboBox1.Items.Add(C.Name);
@@ -214,6 +272,35 @@ namespace Student_Management
                 }
                 listView1.Update();
             }
+            if(comboBox2.Text=="Time-table list")
+            {
+                List<Course> courses = new List<Course>();
+                if (comboBox1.Text == "All")
+                {
+                    courses = Report.getCourseFromDB();
+                }
+                else
+                {
+                    courses = Report.GetCourseFromDB_Class(comboBox1.Text);
+                }
+
+                listView1.Items.Clear();
+                int i = 1;
+                foreach (Course S in courses)
+                {
+                    var item = new ListViewItem();
+                    item = addCourseToLV(S, i);
+                    i++;
+
+                    listView1.Items.Add(item);
+                }
+                listView1.Update();
+            }
+        }
+
+        private void AddToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -106,6 +106,13 @@ namespace Student_Management.BS
             return false;
         }
 
+        public bool checkStudentAlreadySignCourse()
+        {
+
+
+            return true;
+        }
+
 
     }
 }
