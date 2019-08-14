@@ -65,7 +65,7 @@ namespace Student_Management
                     List<Student> students = new List<Student>();
                     students = Report.GetStudents(path);
                     Report.addClassToDB(students[0].Class);
-                    //Console.WriteLine("Success in f");
+                    Console.WriteLine("Success in f1");
                     foreach (Student s in students)
                     {
                         //Console.WriteLine(s.StudentID);
@@ -80,15 +80,36 @@ namespace Student_Management
                     
                     foreach(Course temp in courses)
                     {
-                        Console.WriteLine(temp.codeName + " " + temp.FullName + " " + temp.room + " " + temp.Class);
+                        //Console.WriteLine(temp.codeName + " " + temp.FullName + " " + temp.room + " " + temp.Class);
                         Report.addCourseToDB(temp);
+                    }
+                }
+                if(Business.checkCSV(path)==Business.Class_Course_list)
+                {
+                    List<Grade> grades = new List<Grade>();
+                    grades = Report.GetListCourse_Class_List(path);
+                    foreach(Grade G in grades)
+                    {
+                        Report.addCourse_Class_List_EToDB(G);
+                    }
+                }
+                if(Business.checkCSV(path)==Business.Grade_list)
+                {
+                    List<Grade> grades = new List<Grade>();
+                    grades = Report.GetGrades(path);
+                    foreach(Grade G in grades)
+                    {
+                        Report.addGradeToDB(G);
                     }
                 }
                 //listView1.Update();
             }
             
         }
+        public void putGradeFromClassCourseListToLV()
+        {
 
+        }
         public ListViewItem addStudentToLV(Student S, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString());
@@ -99,6 +120,17 @@ namespace Student_Management
             return item;
         }
 
+        public ListViewItem addGradeToLV(Grade G, int i)
+        {
+            ListViewItem item= new ListViewItem(i.ToString());
+            item.SubItems.Add(G.StudentID.ToString());
+            item.SubItems.Add(G.StudentName);
+            item.SubItems.Add(G.Mid_Term.ToString());
+            item.SubItems.Add(G.Final_Term.ToString());
+            item.SubItems.Add(G.Other_grade.ToString());
+            item.SubItems.Add(G.Sum_Grade.ToString());
+            return item;
+        }
         public ListViewItem addCourseToLV(Course S, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString());
@@ -234,10 +266,53 @@ namespace Student_Management
             }
             if(comboBox2.Text == "Class-Course list" || comboBox2.Text=="Grade list")
             {
+                List<Class> classes = new List<Class>();
+                classes = Report.GetClassFromDB();
+                foreach (Class C in classes)
+                {
+                    comboBox1.Items.Add(C.Name);
+                }
+                comboBox1.Items.Add("All");
+                List<Course> courses = new List<Course>();
+                courses = Report.GetCourseFromDB_Class(comboBox1.Text);
+                foreach(Course course in courses)
+                {
+                    comboBox3.Items.Add(course.codeName);
+                }
                 label3.Show();
                 label3.Enabled = true;
                 comboBox3.Show();
                 comboBox3.Enabled = true;
+                if (comboBox2.Text=="Class-Course list")
+                {
+                    if (listView1.Columns.Count != 5)
+                    {
+                        listView1.Columns[1].Text = "MSSV";
+                        listView1.Columns[2].Text = "Họ và Tên";
+                        listView1.Columns[3].Text = "Giới tính";
+                        listView1.Columns[4].Text = "CMND";
+                        listView1.Columns[5].Width = 0;
+                        listView1.Columns[6].Width = 0;
+                        //listView1.Columns[7].Width = 0;
+                        listView1.Update();
+                    }
+                }
+                else
+                {
+                    if (listView1.Columns.Count != 4)
+                    {
+                        classes = Report.GetClassFromDB_Course();
+                        listView1.Columns[1].Text = "MSSV";
+                        listView1.Columns[2].Text = "Họ và Tên";
+                     
+                        listView1.Columns[3].Text = "Điểm GK";
+                        listView1.Columns[4].Text = "Điểm CK";
+                        listView1.Columns[5].Text = "Điểm khác";
+                        listView1.Columns[6].Text = "Điểm tổng";
+                        listView1.Update();
+                    }
+                }
+             
             }
         }
 
@@ -296,11 +371,60 @@ namespace Student_Management
                 }
                 listView1.Update();
             }
+            if (comboBox2.Text == "Class-Course list")
+            {
+                List<Student> students = new List<Student>();
+                //Console.WriteLine(comboBox1.Text);
+                students = Report.GetStudentsFromCCL_DB(comboBox3.Text, comboBox1.Text);
+                listView1.Items.Clear();
+                int i = 1;
+                foreach (Student S in students)
+                {
+                    var item = new ListViewItem();
+                    item = addStudentToLV(S, i);
+                    i++;
+
+                    listView1.Items.Add(item);
+                }
+                listView1.Update();
+            }
+            if(comboBox2.Text=="Grade list")
+            {
+                Console.WriteLine("Right grade?");
+                List<Grade> grades = new List<Grade>();
+                grades = Report.GetGradesFromDB(comboBox1.Text, comboBox3.Text);
+                listView1.Items.Clear();
+                int i = 1;
+                foreach (Grade G in grades)
+                {
+                    var item = new ListViewItem();
+                    item = addGradeToLV(G, i);
+                    i++;
+                    Console.WriteLine(i.ToString());
+                    listView1.Items.Add(item);
+                }
+                listView1.Update();
+            }
         }
 
         private void AddToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string Class = comboBox1.Text;
+            List<Class> courses = new List<Class>();
+            Console.WriteLine("Changed!");
+            comboBox3.Items.Clear();
+            courses = Report.GetClassesforCCL_DB(Class);
+            foreach (Class C in courses)
+            {
+                Console.WriteLine(C.Name);
+                comboBox3.Items.Add(C.Name);
+            }
+           
         }
     }
 }

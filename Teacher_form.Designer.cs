@@ -38,7 +38,6 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -111,23 +110,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(838, 280);
+            this.button1.Location = new System.Drawing.Point(838, 321);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(198, 35);
             this.button1.TabIndex = 1;
             this.button1.Text = "Import CSV";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(838, 321);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(198, 35);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Get Database";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // button3
             // 
@@ -146,6 +135,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 28);
             this.comboBox1.TabIndex = 6;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -182,7 +172,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(838, 239);
+            this.button5.Location = new System.Drawing.Point(838, 280);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(198, 35);
             this.button5.TabIndex = 10;
@@ -229,7 +219,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(838, 198);
+            this.button7.Location = new System.Drawing.Point(838, 239);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(198, 35);
             this.button7.TabIndex = 15;
@@ -243,19 +233,19 @@
             this.addToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(241, 101);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(135, 68);
             // 
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(134, 32);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.AddToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(134, 32);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // Teacher_form
@@ -274,7 +264,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listView1);
             this.Name = "Teacher_form";
@@ -294,7 +283,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox comboBox1;

@@ -52,11 +52,16 @@ namespace Student_Management.DTO
 
         public int ID { get; set; }
         public int StudentID { get; set; }
+        public string StudentName { get; set; }
         public string CodeCourse{ get; set; }
         public float Mid_Term { get; set; }
         public float Final_Term { get; set; }
         public float Other_grade { get; set; }
         public float Sum_Grade { get; set; }
+
+        public string Sub_Class { get; set; }
+
+        public string Main_Class { get; set; }
     }
 }
 

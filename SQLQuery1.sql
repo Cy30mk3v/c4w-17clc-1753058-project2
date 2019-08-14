@@ -11,7 +11,7 @@ CREATE TABLE Student
 	Social_ID NVARCHAR(10),
 	Class NVARCHAR(255),
 	Courses NVARCHAR(255),
-	PRIMARY KEY(StudentID,Social_ID),
+	PRIMARY KEY(StudentID),
 )
 
 CREATE TABLE Accounts
@@ -39,11 +39,15 @@ CREATE TABLE Grade
 (
 	ID INT IDENTITY(1,1),
 	StudentID INT,
+	StudentName NVARCHAR(255),
 	CodeCourse NVARCHAR(255),
 	Mid_Term FLOAT DEFAULT 0,
 	Final_Term FLOAT DEFAULT 0,
 	Other_Grade FLOAT DEFAULT 0,
 	Sum_Grade FLOAT DEFAULT 0,
+	Class NVARCHAR(15) DEFAULT 'NONE',
+	Sub_Class NVARCHAR(15) DEFAULT 'NONE',
+	PRIMARY KEY(StudentID,CodeCourse),
 
 )
 
@@ -60,6 +64,8 @@ DROP TABLE Grade
 SELECT * FROM Student
 SELECT * FROM Course
 SELECT * FROM Grade
+
+DELETE FROM Student
 x
 use master;
 drop database StudentManagement
@@ -77,3 +83,10 @@ WHERE Student.Class = Course.Class AND NOT EXISTS (SELECT G.StudentID,G.CodeCour
 													WHERE G.StudentID = Student.StudentID AND G.CodeCourse = Course.codeName)
 GROUP BY codeName,Student.ID,Student.StudentID
 HAVING Student.ID=MAX(Student.ID)
+
+SELECT S.* 
+FROM Student S, Grade G 
+WHERE S.StudentID = G.StudentID AND (G.Sub_Class ='18CLC1' OR G.Class='18CLC1') AND G.CodeCourse='CTT001'
+
+
+SELECT * FROM Grade WHERE Grade.CodeCourse='18CLC1' AND (Grade.Class='CTT001' OR Grade.Sub_Class='18CLC1')
