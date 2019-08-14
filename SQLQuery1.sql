@@ -57,16 +57,14 @@ CREATE TABLE Grade
 
 
 INSERT INTO Accounts (UserName,PassWord) values ('giaovu','giaovu');
+INSERT INTO Accounts (UserName,PassWord) values ('1742005','11111999');
 
-DROP TABLE Student
-DROP TABLE Course
-DROP TABLE Grade
 SELECT * FROM Student
 SELECT * FROM Course
 SELECT * FROM Grade
 
-DELETE FROM Student
-x
+SELECT * FROM Accounts
+
 use master;
 drop database StudentManagement
 

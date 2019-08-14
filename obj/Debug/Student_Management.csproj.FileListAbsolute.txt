@@ -22,3 +22,7 @@ C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.exe
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.pdb
 C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.AddStudentToCourse.resources
+C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.Satistic.resources
+C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.AddAccount.resources
+C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.Change_Password.resources
+C:\Users\ThinkKING\source\repos\Student_Management\obj\Debug\Student_Management.ChangeGrade.resources

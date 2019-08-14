@@ -43,16 +43,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.button5 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.add_StudentMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStrip1.SuspendLayout();
+            this.Grade_retype = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.retypeGradeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showSatisticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.add_StudentMenu.SuspendLayout();
+            this.Grade_retype.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -170,16 +171,6 @@
             this.comboBox2.TabIndex = 9;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.ComboBox2_SelectedIndexChanged);
             // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(838, 280);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(198, 35);
-            this.button5.TabIndex = 10;
-            this.button5.Text = "Add student";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.Button5_Click);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -217,48 +208,54 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.Button6_Click);
             // 
-            // button7
+            // add_StudentMenu
             // 
-            this.button7.Location = new System.Drawing.Point(838, 239);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(198, 35);
-            this.button7.TabIndex = 15;
-            this.button7.Text = "Add student to Course";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem,
-            this.deleteToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(135, 68);
+            this.add_StudentMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.add_StudentMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem});
+            this.add_StudentMenu.Name = "contextMenuStrip1";
+            this.add_StudentMenu.Size = new System.Drawing.Size(119, 36);
+            this.add_StudentMenu.Opening += new System.ComponentModel.CancelEventHandler(this.Add_StudentMenu_Opening);
             // 
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(134, 32);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(118, 32);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.AddToolStripMenuItem_Click);
             // 
-            // deleteToolStripMenuItem
+            // Grade_retype
             // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(134, 32);
-            this.deleteToolStripMenuItem.Text = "Delete";
+            this.Grade_retype.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.Grade_retype.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.retypeGradeToolStripMenuItem,
+            this.showSatisticToolStripMenuItem});
+            this.Grade_retype.Name = "Grade_retype";
+            this.Grade_retype.Size = new System.Drawing.Size(241, 101);
+            // 
+            // retypeGradeToolStripMenuItem
+            // 
+            this.retypeGradeToolStripMenuItem.Name = "retypeGradeToolStripMenuItem";
+            this.retypeGradeToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.retypeGradeToolStripMenuItem.Text = "Retype grade";
+            this.retypeGradeToolStripMenuItem.Click += new System.EventHandler(this.RetypeGradeToolStripMenuItem_Click);
+            // 
+            // showSatisticToolStripMenuItem
+            // 
+            this.showSatisticToolStripMenuItem.Name = "showSatisticToolStripMenuItem";
+            this.showSatisticToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.showSatisticToolStripMenuItem.Text = "Show satistic";
+            this.showSatisticToolStripMenuItem.Click += new System.EventHandler(this.ShowSatisticToolStripMenuItem_Click);
             // 
             // Teacher_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1048, 450);
-            this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -269,7 +266,8 @@
             this.Name = "Teacher_form";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Teacher_Load);
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.add_StudentMenu.ResumeLayout(false);
+            this.Grade_retype.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,16 +287,16 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip add_StudentMenu;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip Grade_retype;
+        private System.Windows.Forms.ToolStripMenuItem retypeGradeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showSatisticToolStripMenuItem;
     }
 }

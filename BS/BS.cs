@@ -106,13 +106,19 @@ namespace Student_Management.BS
             return false;
         }
 
-        public bool checkStudentAlreadySignCourse()
+        static public bool checkAccountExist(string StudentID)
         {
-
-
-            return true;
+            List<Account> accounts = new List<Account>();
+            accounts = Report.GetAccountsFromDB();
+            foreach(Account account in accounts)
+            {
+                if(StudentID==account.UserName)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
-
 
     }
 }

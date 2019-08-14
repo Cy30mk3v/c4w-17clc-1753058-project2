@@ -86,12 +86,19 @@ namespace Student_Management
                 }
                 if(Business.checkCSV(path)==Business.Class_Course_list)
                 {
+                    string Class, Course;
+                    Report.getClassAndCourse(path, out Class, out Course);
+                    
+                    Report.DeleteGradeL(Class, Course);
                     List<Grade> grades = new List<Grade>();
                     grades = Report.GetListCourse_Class_List(path);
-                    foreach(Grade G in grades)
+
+                    Console.WriteLine(grades.Count() + "------------------");
+                    foreach (Grade G in grades)
                     {
                         Report.addCourse_Class_List_EToDB(G);
                     }
+                    
                 }
                 if(Business.checkCSV(path)==Business.Grade_list)
                 {
@@ -101,6 +108,7 @@ namespace Student_Management
                     {
                         Report.addGradeToDB(G);
                     }
+                    
                 }
                 //listView1.Update();
             }
@@ -193,21 +201,7 @@ namespace Student_Management
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            AddStudent add = new AddStudent();
-            add.ShowDialog();
-            Student S1 = new Student();
-            S1 = add.S;
-            if(S1.StudentID==default(int))
-            {
-                return;
-            }
-            if(Business.checkStudentInDB(S1.StudentID))
-            {
-                MessageBox.Show("This student already existed!");
-                return;
-
-            }
-            Report.addStudentToDB(S1);
+           
         }
 
         private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -230,13 +224,14 @@ namespace Student_Management
                         listView1.Columns[4].Text = "CMND";
                         listView1.Columns[5].Width = 0;
                         listView1.Columns[6].Width = 0;
+                        listView1.ContextMenuStrip = add_StudentMenu;
                         //listView1.Columns[7].Width = 0;
                         listView1.Update();
                     }
                 }
                 else
                 {
-                    Console.WriteLine("a");
+                    //Console.WriteLine("a");
                     //if(listView1.Columns.Count)
                     if (listView1.Columns.Count != 4)
                     {
@@ -272,7 +267,7 @@ namespace Student_Management
                 {
                     comboBox1.Items.Add(C.Name);
                 }
-                comboBox1.Items.Add("All");
+               // comboBox1.Items.Add("All");
                 List<Course> courses = new List<Course>();
                 courses = Report.GetCourseFromDB_Class(comboBox1.Text);
                 foreach(Course course in courses)
@@ -294,6 +289,7 @@ namespace Student_Management
                         listView1.Columns[5].Width = 0;
                         listView1.Columns[6].Width = 0;
                         //listView1.Columns[7].Width = 0;
+                        
                         listView1.Update();
                     }
                 }
@@ -309,6 +305,8 @@ namespace Student_Management
                         listView1.Columns[4].Text = "Điểm CK";
                         listView1.Columns[5].Text = "Điểm khác";
                         listView1.Columns[6].Text = "Điểm tổng";
+                        listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                        listView1.ContextMenuStrip = Grade_retype;
                         listView1.Update();
                     }
                 }
@@ -318,7 +316,8 @@ namespace Student_Management
 
         private void Button4_Click_1(object sender, EventArgs e)
         {
-
+            Change_Password change = new Change_Password("giaovu");
+            change.ShowDialog();
         }
 
         private void Button6_Click(object sender, EventArgs e)
@@ -409,7 +408,21 @@ namespace Student_Management
 
         private void AddToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            AddStudent add = new AddStudent();
+            add.ShowDialog();
+            Student S1 = new Student();
+            S1 = add.S;
+            if (S1.StudentID == default(int))
+            {
+                return;
+            }
+            if (Business.checkStudentInDB(S1.StudentID))
+            {
+                MessageBox.Show("This student already existed!");
+                return;
 
+            }
+            Report.addStudentToDB(S1);
         }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -425,6 +438,63 @@ namespace Student_Management
                 comboBox3.Items.Add(C.Name);
             }
            
+        }
+
+        private void Button7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RetypeGradeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string ID = listView1.SelectedItems[0].SubItems[1].Text;
+            string code = comboBox3.Text;
+            ChangeGrade change = new ChangeGrade(ID,code);
+            change.ShowDialog();
+
+        }
+
+        private void Add_StudentMenu_Opening(object sender, CancelEventArgs e)
+        {
+            AddStudent add = new AddStudent();
+            add.ShowDialog();
+        }
+
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RemoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int StudentID = Convert.ToInt32(listView1.SelectedItems[0].SubItems[1].Text);
+            string Class = comboBox1.Text;
+            string course = comboBox3.Text;
+            Report.removeStudentFromCourse(StudentID, course, Class);
+        }
+
+
+        
+        private void ShowSatisticToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int total = listView1.Items.Count;
+            int pass = 0;
+            for(int i=0;i<listView1.Items.Count;i++)
+            {
+                if(float.Parse(listView1.Items[i].SubItems[6].Text)>=5)
+                {
+                    pass++;
+                }
+            }
+            List<Grade> grades = new List<Grade>();
+            grades = Report.GetGradesFromDB(comboBox1.Text, comboBox3.Text);
+            Satistic Form_satistic= new Satistic(grades,comboBox3.Text,comboBox1.Text);
+            Form_satistic.Show();
         }
     }
 }

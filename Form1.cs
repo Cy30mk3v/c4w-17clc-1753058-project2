@@ -70,7 +70,9 @@ namespace Student_Management
                 }
                 else
                 {
-
+                    Student_form f = new Student_form(Convert.ToInt32(textBox1.Text));
+                    newLogin();
+                    f.ShowDialog();
                 }
             }
         }
@@ -136,6 +138,17 @@ namespace Student_Management
         private void Button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            AddAccount add = new AddAccount();
+            add.ShowDialog();
+        }
+
+        private void Button1_Click_1(object sender, EventArgs e)
+        {
+            Button1_Click(sender, e);
         }
     }
 }

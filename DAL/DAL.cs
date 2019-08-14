@@ -13,6 +13,20 @@ namespace Student_Management.DAL
 {
     public class Report
     {
+        /*Only for Course list*/
+        static public void getClassAndCourse(string path, out string Class, out string Course)
+        {
+            List<Grade> result = new List<Grade>();
+            StreamReader sr = new StreamReader(path);
+            string line;
+            line = sr.ReadLine();
+            var split = line.Split(',');
+            var split_sub = split[0].Split('-');
+
+            Class = split_sub[0];
+            Course = split_sub[1];
+            
+        }
         static public List<Student> GetStudents(string path)
         {
             List<Student> result = new List<Student>();
@@ -21,7 +35,7 @@ namespace Student_Management.DAL
             line = sr.ReadLine();
             var split = line.Split(',');
 
-            Console.WriteLine(split[0]);
+            //Console.WriteLine(split[0]);
             line = sr.ReadLine();
             int i = 1;
             while (!sr.EndOfStream)
@@ -38,7 +52,7 @@ namespace Student_Management.DAL
                 {
                     temp.Gender = 'M';
                 }
-               
+
                 temp.Social_ID = (values[4]);
                 temp.Class = split[0];
                 result.Add(temp);
@@ -55,7 +69,7 @@ namespace Student_Management.DAL
             line = sr.ReadLine();
             var split = line.Split(',');
             string Class = split[0];
-            Console.WriteLine(split[0]);
+           //Console.WriteLine(split[0]);
             line = sr.ReadLine();
             int i = 1;
             while (!sr.EndOfStream)
@@ -70,11 +84,60 @@ namespace Student_Management.DAL
                 temp.room = values[3];
                 temp.Class = Class;
                 result.Add(temp);
-                Console.WriteLine(temp.codeName + " " + temp.FullName + " " + temp.room + " " + temp.Class);
+                //Console.WriteLine(temp.codeName + " " + temp.FullName + " " + temp.room + " " + temp.Class);
             }
             return result;
         }
 
+        static public string getCourseName (string code)
+        {
+            string name = null;
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
+
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT Course.FullName FROM Course WHERE Course.codeName ='" + code + "'";
+
+            OleDbDataReader rd = cmd.ExecuteReader();
+           
+        
+            while (rd.Read())
+            {
+                name = rd.GetString(0);
+            }
+            conn.Close();
+
+
+            return name;
+
+        }
+
+        static public string getStudentName(string studentID)
+        {
+            string name = null;
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
+
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT Name FROM Student WHERE StudentID =" + studentID;
+
+            OleDbDataReader rd = cmd.ExecuteReader();
+
+
+            while (rd.Read())
+            {
+                name = rd.GetString(0);
+            }
+            conn.Close();
+
+
+            return name;
+
+        }
         static public List<Grade> GetListCourse_Class_List(string path)
         {
             List<Grade> result = new List<Grade>();
@@ -87,7 +150,7 @@ namespace Student_Management.DAL
             string Class = split_sub[0];
             string Course = split_sub[1];
             string Main_Class = Class.Substring(0, 2);
-            Console.WriteLine(Main_Class);
+            //Console.WriteLine(Main_Class);
             line = sr.ReadLine();
             int i = 1;
             while (!sr.EndOfStream)
@@ -100,7 +163,7 @@ namespace Student_Management.DAL
                 temp.StudentID = Convert.ToInt32(values[1]);
                 temp.CodeCourse = Course;
                 temp.StudentName = values[2];
-                if(Main_Class!=temp.StudentID.ToString().Substring(0,2))
+                if (Main_Class != temp.StudentID.ToString().Substring(0, 2))
                 {
                     temp.Sub_Class = Class;
                     temp.Main_Class = "NONE";
@@ -111,14 +174,37 @@ namespace Student_Management.DAL
                     temp.Main_Class = Class;
                     temp.Sub_Class = "NONE";
                 }
-                Console.WriteLine(temp.StudentID.ToString() +"/"+ temp.CodeCourse + "/"+ temp.Main_Class + "/" + temp.Sub_Class);
+                //Console.WriteLine(temp.StudentID.ToString() + "/" + temp.CodeCourse + "/" + temp.Main_Class + "/" + temp.Sub_Class);
                 result.Add(temp);
-               // Console.WriteLine(temp.codeName + " " + temp.FullName + " " + temp.room + " " + temp.Class);
+                // Console.WriteLine(temp.codeName + " " + temp.FullName + " " + temp.room + " " + temp.Class);
             }
             return result;
         }
 
+        static public void removeStudentFromCourse(int studentID, string code, string Class)
+        {
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
 
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE * FROM Course WHERE StudentID=" + studentID.ToString() + " AND CodeCourse = '" + code + "' AND (Sub_Class = '" + Class + "'OR Class='" + Class + "')";
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+        static public void addAccount(string StudentID, string birthday)
+        {
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
+
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "INSERT INTO Accounts (UserName,PassWord) values ('" + StudentID + "','" + birthday + "')";
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
         static public List<Grade> GetGradesFromDB_CCL()
         {
             OleDbConnection conn = new OleDbConnection();
@@ -135,12 +221,12 @@ namespace Student_Management.DAL
             while (rd.Read())
             {
                 var temp = new Grade();
-               
+
                 temp.StudentID = rd.GetInt32(1);
                 temp.StudentName = rd.GetString(2);
                 temp.CodeCourse = rd.GetString(3);
 
-                
+
                 temp.Main_Class = rd.GetString(8);
                 temp.Sub_Class = rd.GetString(9);
                 grades.Add(temp);
@@ -157,7 +243,7 @@ namespace Student_Management.DAL
             grades = GetGradesFromDB_CCL();
             foreach (Grade grade in grades)
             {
-                if (grade.StudentID == G.StudentID && (grade.Sub_Class == G.Sub_Class || grade.Main_Class == G.Main_Class))
+                if (grade.StudentID == G.StudentID && (grade.Sub_Class == G.Sub_Class || grade.Main_Class == G.Main_Class) && G.CodeCourse==grade.CodeCourse)
                 {
                     return;
                 }
@@ -172,8 +258,8 @@ namespace Student_Management.DAL
             string pre, post;
             pre = post = null;
             string Class;
-            Console.WriteLine(G.Main_Class);
-            if(G.Main_Class!="NONE")
+            //Console.WriteLine(G.Main_Class);
+            if (G.Main_Class != "NONE")
             {
                 pre = "INSERT INTO Grade (StudentID,StudentName,CodeCourse,Class) VALUES(";
                 Class = G.Main_Class;
@@ -187,13 +273,49 @@ namespace Student_Management.DAL
             post = G.StudentID.ToString() + ',' + "N'" + G.StudentName + split3 + G.CodeCourse + split3 + Class + split2 + ")";
             OleDbCommand cmd = new OleDbCommand(pre + post, conn);
 
-            Console.WriteLine(pre + post);
+           // Console.WriteLine(pre + post);
 
             cmd.ExecuteNonQuery();
             conn.Close();
 
         }
-        static public void addCourseToDB(Course course)     
+
+        static public void changePassword(string username, string newPass)
+        {
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
+
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE Accounts SET PassWord='" + newPass + "' WHERE UserName='" + username + "'";
+
+            Console.WriteLine(cmd.CommandText);
+            //Console.WriteLine(pre + post);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        static public void updateGrade(string studentID, string Course, float P1, float P2, float P3, float P4)
+        {
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
+
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "UPDATE Grade SET Mid_Term=" + P1.ToString() + ",Final_Term=" + P2.ToString() + ",Other_Grade=" + P3.ToString() + ",Sum_Grade=" + P4.ToString() + " WHERE StudentID=" + studentID + "AND CodeCourse='" + Course + "'";
+
+            Console.WriteLine(cmd.CommandText);
+            //Console.WriteLine(pre + post);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+        }
+        static public void addCourseToDB(Course course)
         {
             List<Course> courses = new List<Course>();
             courses = getCourseFromDB();
@@ -202,13 +324,13 @@ namespace Student_Management.DAL
             {
                 if (C.codeName == course.codeName)
                 {
-                    Console.WriteLine(C.codeName + " " + course.codeName);
+                    //Console.WriteLine(C.codeName + " " + course.codeName);
                     break;
                 }
             }
             if (check == false)
             {
-                Console.WriteLine("Not good");
+                //Console.WriteLine("Not good");
                 return;
             }
             OleDbConnection conn = new OleDbConnection();
@@ -219,15 +341,104 @@ namespace Student_Management.DAL
             string split2 = s2.ToString();
             string split3 = split2 + split1;
             string pre = "INSERT INTO Course (codeName,FullName,Room,Class) VALUES (";
-            string post = split2+course.codeName +split2+ ",N'" + course.FullName + split3 + course.room +  split3 + course.Class+split2+")";
+            string post = split2 + course.codeName + split2 + ",N'" + course.FullName + split3 + course.room + split3 + course.Class + split2 + ")";
             OleDbCommand cmd = new OleDbCommand(pre + post, conn);
 
-            Console.WriteLine(pre + post);
+            //Console.WriteLine(pre + post);
 
             cmd.ExecuteNonQuery();
             conn.Close();
+
+            OleDbConnection conn1 = new OleDbConnection();
+            conn1.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn1.Open();
+            string insert_1 = "INSERT INTO Grade(StudentID, CodeCourse,StudentName,Class)\n";
+            string insert_2 = "SELECT Student.StudentID,Course.codeName,Student.Name,Student.Class \n";
+            string insert_3 = "FROM Student,Course\n";
+            string insert_4 = "WHERE Student.Class = Course.Class AND NOT EXISTS(SELECT G.StudentID, G.CodeCourse ";
+
+            string insert_5 = "FROM Grade G ";
+
+            string insert_6 = "WHERE G.StudentID = Student.StudentID AND G.CodeCourse = Course.codeName)\n";
+            string insert_7 = "GROUP BY codeName,Student.Name,Student.StudentID,Student.ID,Student.Class\n";
+            string insert_8 = "HAVING Student.ID = MAX(Student.ID)";
+            string insert = insert_1 + insert_2 + insert_3 + insert_4 + insert_5 + insert_6 + insert_7 + insert_8;
+
+            OleDbCommand cmd1 = new OleDbCommand(insert, conn1);
+
+            cmd1.ExecuteNonQuery();
+            conn1.Close();
         }
 
+       static public void DeleteGradeL(string Class, string Course)
+        {
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
+
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM Grade WHERE Grade.Class='" + Class + "' AND Grade.CodeCourse='" + Course + "'";
+
+
+            //Console.WriteLine(pre + post);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+        }
+    
+
+        static public List<Grade> GetGradesFromDB()
+        {
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
+
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT * FROM Grade";
+
+            OleDbDataReader rd = cmd.ExecuteReader();
+            List<Grade> results = new List<Grade>();
+            while (rd.Read())
+            {
+
+                var item = new Grade();
+                item.StudentID = rd.GetInt32(1);
+                item.StudentName = rd.GetString(2);
+                item.CodeCourse = rd.GetString(3);
+                item.Mid_Term = (float)rd.GetDouble(4);
+                item.Final_Term = (float)rd.GetDouble(5);
+                item.Other_grade = (float)rd.GetDouble(6);
+                item.Sum_Grade = (float)rd.GetDouble(7);
+                item.Main_Class = rd.GetString(8);
+                item.Sub_Class = rd.GetString(9);
+                results.Add(item);
+            }
+            conn.Close();
+
+
+            return results;
+        }
+
+        static public void deleteGrade(Grade G,string code)
+        {
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
+
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "DELETE FROM Grade WHERE Grade.StudentID="+G.StudentID+" AND Grade.CodeCourse='"+ code +"'";
+           
+
+            //Console.WriteLine(pre + post);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+        } 
         static public List<Course> getCourseFromDB()
         {
             OleDbConnection conn = new OleDbConnection();
@@ -314,23 +525,8 @@ namespace Student_Management.DAL
             conn.Close();
 
             //string insert = "INSERT INTO Grade(StudentID, CodeCourse) SELECT Student.StudentID,Course.codeName FROM Student,Course WHERE Student.Class = Course.Class GROUP BY codeName,Student.ID,Student.StudentID HAVING Student.ID = MAX(Student.ID)";
-
-            string insert_1 = "INSERT INTO Grade(StudentID, CodeCourse,StudentName)\n";
-            string insert_2 = "SELECT Student.StudentID,Course.codeName,Student.Name \n";
-            string insert_3 = "FROM Student,Course\n";
-            string insert_4 = "WHERE Student.Class = Course.Class AND NOT EXISTS(SELECT G.StudentID, G.CodeCourse ";
-
-            string insert_5 = "FROM Grade G ";
-
-            string insert_6 = "WHERE G.StudentID = Student.StudentID AND G.CodeCourse = Course.codeName)\n";
-            string insert_7 = "GROUP BY codeName,Student.Name,Student.StudentID,Student.ID\n";
-            string insert_8 = "HAVING Student.ID = MAX(Student.ID)";
-            string insert = insert_1 + insert_2 + insert_3 + insert_4 + insert_5 + insert_6 + insert_7 + insert_8;
-            conn.Open();
-            OleDbCommand cmd1 = new OleDbCommand(insert, conn);
-           
-            cmd1.ExecuteNonQuery();
-            conn.Close();
+            
+            
         }
 
         static public void addStudentToGradeList(int StudentID, string StudentName, string Code)
@@ -365,7 +561,7 @@ namespace Student_Management.DAL
                 var temp = new Account();
                 temp.UserName = rd.GetString(0);
                 temp.PassWord = rd.GetString(1);
-                Console.WriteLine(rd.GetString(0));
+                //Console.WriteLine(rd.GetString(0));
                 accounts.Add(temp);
             }
             conn.Close();
@@ -596,7 +792,7 @@ namespace Student_Management.DAL
             string Class = split_sub[0];
             string Course = split_sub[1];
             string Main_Class = Class.Substring(0, 2);
-            Console.WriteLine(Main_Class);
+            //Console.WriteLine(Main_Class);
             line = sr.ReadLine();
             int i = 1;
             while (!sr.EndOfStream)
@@ -624,7 +820,7 @@ namespace Student_Management.DAL
                     temp.Main_Class = Class;
                     temp.Sub_Class = "NONE";
                 }
-                Console.WriteLine(temp.StudentID.ToString() + "/" + temp.CodeCourse + "/" + temp.Main_Class + "/" + temp.Sub_Class);
+                //Console.WriteLine(temp.StudentID.ToString() + "/" + temp.CodeCourse + "/" + temp.Main_Class + "/" + temp.Sub_Class);
                 result.Add(temp);
                 // Console.WriteLine(temp.codeName + " " + temp.FullName + " " + temp.room + " " + temp.Class);
             }
@@ -679,7 +875,7 @@ namespace Student_Management.DAL
             OleDbCommand cmd = new OleDbCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT * FROM  Grade WHERE Grade.CodeCourse='"+course_code +"' AND (Grade.Class='" +Class + "' OR Grade.Sub_Class='" + Class +"')";
-            Console.WriteLine(cmd.CommandText);
+            //Console.WriteLine(cmd.CommandText);
             OleDbDataReader rd = cmd.ExecuteReader();
             while (rd.Read())
             {
@@ -726,7 +922,7 @@ namespace Student_Management.DAL
             OleDbCommand cmd = new OleDbCommand();
             cmd.Connection = conn;
             cmd.CommandText = "SELECT S.* " + "FROM Student S, Grade G " + "WHERE S.StudentID = G.StudentID AND (G.Sub_Class ='" + Class + "'OR G.Class='" + Class + "') AND G.CodeCourse='" + code +"'";
-            Console.WriteLine(cmd.CommandText);
+            //Console.WriteLine(cmd.CommandText);
             OleDbDataReader rd = cmd.ExecuteReader();
             List<Student> results = new List<Student>();
             while (rd.Read())
@@ -736,6 +932,34 @@ namespace Student_Management.DAL
                 item.Name = rd.GetString(2);
                 item.Gender = Convert.ToChar(rd.GetString(3));
                 item.Social_ID = rd.GetString(4);
+                results.Add(item);
+            }
+            conn.Close();
+            return results;
+        }
+
+        static public List<Grade> getStudentGrade(int studentID)
+        {
+            OleDbConnection conn = new OleDbConnection();
+            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.Open();
+
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT G.* " + "FROM Grade G " + "WHERE G.StudentID =" + studentID.ToString();
+            //Console.WriteLine(cmd.CommandText);
+            OleDbDataReader rd = cmd.ExecuteReader();
+            List<Grade> results = new List<Grade>();
+            while (rd.Read())
+            {
+                var item = new Grade();
+                item.StudentID = rd.GetInt32(1);
+                item.StudentName = rd.GetString(2);
+                item.CodeCourse = rd.GetString(3);
+                item.Mid_Term = (float)rd.GetDouble(4);
+                item.Final_Term = (float)rd.GetDouble(5);
+                item.Other_grade = (float)rd.GetDouble(6);
+                item.Sum_Grade = (float)rd.GetDouble(7);
                 results.Add(item);
             }
             conn.Close();
