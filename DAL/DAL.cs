@@ -96,9 +96,15 @@ namespace Student_Management.DAL
             conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             conn.Open();
 
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
-            cmd.CommandText = "SELECT Course.FullName FROM Course WHERE Course.codeName ='" + code + "'";
+            OleDbCommand cmd = conn.CreateCommand();
+           
+          
+            cmd.CommandText = "SELECT Course.FullName FROM Course WHERE Course.codeName =?";
+            OleDbParameter p1 = new OleDbParameter();
+            cmd.Parameters.Add(p1);
+            p1.Value = code;
+            
+            
 
             OleDbDataReader rd = cmd.ExecuteReader();
            
@@ -107,6 +113,7 @@ namespace Student_Management.DAL
             {
                 name = rd.GetString(0);
             }
+            cmd.Parameters.Clear();
             conn.Close();
 
 
@@ -121,10 +128,13 @@ namespace Student_Management.DAL
             conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             conn.Open();
 
-            OleDbCommand cmd = new OleDbCommand();
+            OleDbCommand cmd = conn.CreateCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "SELECT Name FROM Student WHERE StudentID =" + studentID;
+            cmd.CommandText = "SELECT Name FROM Student WHERE StudentID =?";
 
+            OleDbParameter p1 = new OleDbParameter();
+            cmd.Parameters.Add(p1);
+            p1.Value = studentID;
             OleDbDataReader rd = cmd.ExecuteReader();
 
 
@@ -187,9 +197,22 @@ namespace Student_Management.DAL
             conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             conn.Open();
 
-            OleDbCommand cmd = new OleDbCommand();
+            OleDbCommand cmd = conn.CreateCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "DELETE * FROM Course WHERE StudentID=" + studentID.ToString() + " AND CodeCourse = '" + code + "' AND (Sub_Class = '" + Class + "'OR Class='" + Class + "')";
+
+            OleDbParameter p1 = new OleDbParameter();
+            cmd.Parameters.Add(p1);
+            p1.Value = studentID;
+            OleDbParameter p2 = new OleDbParameter();
+            cmd.Parameters.Add(p2);
+            p2.Value = code;
+            OleDbParameter p3 = new OleDbParameter();
+            cmd.Parameters.Add(p3);
+            p3.Value = Class;
+            OleDbParameter p4 = new OleDbParameter();
+            cmd.Parameters.Add(p4);
+            p4.Value = Class;
+            cmd.CommandText = "DELETE * FROM Course WHERE StudentID=? AND CodeCourse = ? AND (Sub_Class = ? OR Class= ? )";
             cmd.ExecuteNonQuery();
             conn.Close();
         }
@@ -199,9 +222,18 @@ namespace Student_Management.DAL
             conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             conn.Open();
 
-            OleDbCommand cmd = new OleDbCommand();
+            OleDbCommand cmd = conn.CreateCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO Accounts (UserName,PassWord) values ('" + StudentID + "','" + birthday + "')";
+
+            OleDbParameter p1 = new OleDbParameter();
+            cmd.Parameters.Add(p1);
+            p1.Value = StudentID;
+
+            OleDbParameter p2 = new OleDbParameter();
+            cmd.Parameters.Add(p2);
+            p2.Value = birthday;
+            Console.WriteLine(p1.Value.ToString() +  "/" + p2.Value.ToString());
+            cmd.CommandText = "INSERT INTO Accounts (UserName,PassWord) values (?,?)";
             cmd.ExecuteNonQuery();
             conn.Close();
         }
@@ -389,56 +421,9 @@ namespace Student_Management.DAL
         }
     
 
-        static public List<Grade> GetGradesFromDB()
-        {
-            OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
-            conn.Open();
+       
 
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM Grade";
-
-            OleDbDataReader rd = cmd.ExecuteReader();
-            List<Grade> results = new List<Grade>();
-            while (rd.Read())
-            {
-
-                var item = new Grade();
-                item.StudentID = rd.GetInt32(1);
-                item.StudentName = rd.GetString(2);
-                item.CodeCourse = rd.GetString(3);
-                item.Mid_Term = (float)rd.GetDouble(4);
-                item.Final_Term = (float)rd.GetDouble(5);
-                item.Other_grade = (float)rd.GetDouble(6);
-                item.Sum_Grade = (float)rd.GetDouble(7);
-                item.Main_Class = rd.GetString(8);
-                item.Sub_Class = rd.GetString(9);
-                results.Add(item);
-            }
-            conn.Close();
-
-
-            return results;
-        }
-
-        static public void deleteGrade(Grade G,string code)
-        {
-            OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
-            conn.Open();
-
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
-            cmd.CommandText = "DELETE FROM Grade WHERE Grade.StudentID="+G.StudentID+" AND Grade.CodeCourse='"+ code +"'";
-           
-
-            //Console.WriteLine(pre + post);
-
-            cmd.ExecuteNonQuery();
-
-            conn.Close();
-        } 
+       
         static public List<Course> getCourseFromDB()
         {
             OleDbConnection conn = new OleDbConnection();
@@ -609,27 +594,7 @@ namespace Student_Management.DAL
             return sorted;
         }
 
-        static public List<Course> GetCoursesOfStudent(int studentID)
-        {
-            OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
-            conn.Open();
-
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM Grade WHERE StudentID=" + "'" + studentID.ToString() + "'";
-
-            OleDbDataReader rd = cmd.ExecuteReader();
-            List<Course> result = new List<Course>();
-            while(rd.Read())
-            {
-                var item = new Course();
-                item.codeName = rd.GetString(0);
-                result.Add(item);
-            }
-            conn.Close();
-            return result;
-        }
+       
 
         static public int GetStudentID(string name)
         {
