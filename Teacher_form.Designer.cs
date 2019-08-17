@@ -66,6 +66,8 @@
             this.columnHeader4,
             this.columnHeader5,
             this.columnHeader6});
+            this.listView1.FullRowSelect = true;
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(12, 12);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(816, 425);
@@ -231,19 +233,19 @@
             this.retypeGradeToolStripMenuItem,
             this.showSatisticToolStripMenuItem});
             this.Grade_retype.Name = "Grade_retype";
-            this.Grade_retype.Size = new System.Drawing.Size(241, 101);
+            this.Grade_retype.Size = new System.Drawing.Size(190, 68);
             // 
             // retypeGradeToolStripMenuItem
             // 
             this.retypeGradeToolStripMenuItem.Name = "retypeGradeToolStripMenuItem";
-            this.retypeGradeToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.retypeGradeToolStripMenuItem.Size = new System.Drawing.Size(189, 32);
             this.retypeGradeToolStripMenuItem.Text = "Retype grade";
             this.retypeGradeToolStripMenuItem.Click += new System.EventHandler(this.RetypeGradeToolStripMenuItem_Click);
             // 
             // showSatisticToolStripMenuItem
             // 
             this.showSatisticToolStripMenuItem.Name = "showSatisticToolStripMenuItem";
-            this.showSatisticToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.showSatisticToolStripMenuItem.Size = new System.Drawing.Size(189, 32);
             this.showSatisticToolStripMenuItem.Text = "Show satistic";
             this.showSatisticToolStripMenuItem.Click += new System.EventHandler(this.ShowSatisticToolStripMenuItem_Click);
             // 
@@ -263,6 +265,8 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listView1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Teacher_form";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Teacher_Load);

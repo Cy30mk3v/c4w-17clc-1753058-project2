@@ -31,23 +31,23 @@
             this.components = new System.ComponentModel.Container();
             this.teacherBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.listView1 = new System.Windows.Forms.ListView();
-            this.listView2 = new System.Windows.Forms.ListView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listView2 = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -76,6 +76,26 @@
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "STT";
+            this.columnHeader1.Width = 47;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "MSSV";
+            this.columnHeader2.Width = 65;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Họ tên";
+            this.columnHeader3.Width = 135;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Điểm";
+            this.columnHeader7.Width = 121;
+            // 
             // listView2
             // 
             this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -89,6 +109,25 @@
             this.listView2.TabIndex = 2;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "STT";
+            this.columnHeader4.Width = 47;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "MSSV";
+            this.columnHeader5.Width = 86;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Họ Tên";
+            this.columnHeader6.Width = 123;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Điểm";
             // 
             // label1
             // 
@@ -109,21 +148,6 @@
             this.label2.Text = "Lớp:";
             this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "STT";
-            this.columnHeader1.Width = 47;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "MSSV";
-            this.columnHeader2.Width = 65;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Họ tên";
-            this.columnHeader3.Width = 135;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -141,21 +165,6 @@
             this.label4.Size = new System.Drawing.Size(35, 20);
             this.label4.TabIndex = 6;
             this.label4.Text = "Rớt";
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "STT";
-            this.columnHeader4.Width = 47;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "MSSV";
-            this.columnHeader5.Width = 86;
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Họ Tên";
-            this.columnHeader6.Width = 123;
             // 
             // label5
             // 
@@ -193,15 +202,6 @@
             this.label8.Size = new System.Drawing.Size(51, 20);
             this.label8.TabIndex = 10;
             this.label8.Text = "label8";
-            // 
-            // columnHeader7
-            // 
-            this.columnHeader7.Text = "Điểm";
-            this.columnHeader7.Width = 121;
-            // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "Điểm";
             // 
             // label9
             // 
@@ -293,6 +293,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView2);
             this.Controls.Add(this.listView1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Satistic";
             this.Text = "Satistic";
             ((System.ComponentModel.ISupportInitialize)(this.teacherBindingSource)).EndInit();

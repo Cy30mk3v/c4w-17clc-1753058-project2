@@ -21,10 +21,13 @@ namespace Student_Management
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            string date = dateTimePicker1.Value.ToString("dd-mm-yyyy");
+            dateTimePicker1.Value = DateTime.Now;
+            string date = dateTimePicker1.Value.ToString("dd-MM-yyyy");
             //if(dateTimePicker1.Value.)
             //Console.WriteLine(date);
-            date.Replace("-", "");
+            date=date.Replace("-", "");
+            date=date.Replace("/", "");
+           // Console.WriteLine(date);
             if(string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrWhiteSpace(textBox1.Text))
             {
                 MessageBox.Show("Must input Student's ID!");

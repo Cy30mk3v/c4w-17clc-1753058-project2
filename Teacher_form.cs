@@ -30,13 +30,10 @@ namespace Student_Management
             comboBox3.Hide();
             comboBox3.Enabled = false;
             this.Icon = Student_Management.Properties.Resources._1_28_512;
+            //this.FormBorderStyle = FixedSingle;
         }
 
-        public void readCSV()
-        {
-
-
-        }
+       
         private void Button1_Click(object sender, EventArgs e)
         {
             
@@ -451,7 +448,7 @@ namespace Student_Management
             string code = comboBox3.Text;
             ChangeGrade change = new ChangeGrade(ID,code);
             change.ShowDialog();
-
+            Button6_Click(sender, e);
         }
 
         private void Add_StudentMenu_Opening(object sender, CancelEventArgs e)
