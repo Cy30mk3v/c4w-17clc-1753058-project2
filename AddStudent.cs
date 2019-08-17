@@ -26,6 +26,8 @@ namespace Student_Management
                 comboBox2.Items.Add(c.Name);
             }
             S = new Student();
+            dateTimePicker1.Value = DateTime.Now;
+            
 
         }
 
@@ -67,6 +69,12 @@ namespace Student_Management
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            string date = dateTimePicker1.Value.ToString("dd-MM-yyyy");
+            //if(dateTimePicker1.Value.)
+            //Console.WriteLine(date);
+            date = date.Replace("-", "");
+            date = date.Replace("/", "");
+            S.birthday = date;
             S.StudentID = Convert.ToInt32(textBox1.Text);
             S.Name = textBox2.Text;
             S.Gender = Convert.ToChar(comboBox1.Text);

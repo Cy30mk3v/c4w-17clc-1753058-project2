@@ -62,7 +62,7 @@ namespace Student_Management
                     List<Student> students = new List<Student>();
                     students = Report.GetStudents(path);
                     Report.addClassToDB(students[0].Class);
-                    Console.WriteLine("Success in f1");
+                   // Console.WriteLine("Success in f1");
                     foreach (Student s in students)
                     {
                         //Console.WriteLine(s.StudentID);
@@ -453,8 +453,7 @@ namespace Student_Management
 
         private void Add_StudentMenu_Opening(object sender, CancelEventArgs e)
         {
-            AddStudent add = new AddStudent();
-            add.ShowDialog();
+            
         }
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -492,6 +491,17 @@ namespace Student_Management
             grades = Report.GetGradesFromDB(comboBox1.Text, comboBox3.Text);
             Satistic Form_satistic= new Satistic(grades,comboBox3.Text,comboBox1.Text);
             Form_satistic.Show();
+        }
+
+        private void ListView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (listView1.FocusedItem.Bounds.Contains(e.Location))
+                {
+                    listView1.ContextMenuStrip.Show(Cursor.Position);
+                }
+            }
         }
     }
 }

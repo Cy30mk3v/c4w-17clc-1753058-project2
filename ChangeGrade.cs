@@ -21,6 +21,7 @@ namespace Student_Management
             label3.Text = code;
             label2.Text=Report.getCourseName(code);
             label4.Text = Report.getStudentName(StudentID);
+            comboBox1.Text = comboBox2.Text = comboBox3.Text = comboBox4.Text = "0";
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -33,6 +34,11 @@ namespace Student_Management
             Report.updateGrade(label1.Text, label3.Text, p1, p2, p3, p4);
             MessageBox.Show("Success!");
             return;
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

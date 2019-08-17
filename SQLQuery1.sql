@@ -8,9 +8,10 @@ CREATE TABLE Student
 	StudentID INT,
 	Name NVARCHAR(255),
 	Gender CHAR, CHECK (Gender ='F' or Gender ='M' or Gender = 'N'),
-	Social_ID NVARCHAR(10),
+	Social_ID NVARCHAR(15),
 	Class NVARCHAR(255),
 	Courses NVARCHAR(255),
+	birthday VARCHAR(10),
 	PRIMARY KEY(StudentID),
 )
 
@@ -59,12 +60,14 @@ CREATE TABLE Grade
 INSERT INTO Accounts (UserName,PassWord) values ('giaovu','giaovu');
 INSERT INTO Accounts (UserName,PassWord) values ('1742005','11111999');
 
-SELECT * FROM Student
+SELECT * FROM Student ORDER BY ID
 SELECT * FROM Course
 SELECT * FROM Grade
 
 SELECT * FROM Accounts
 
+DELETE FROM STUDENT  WHERE Student.StudentID=1753058
+DELETE Accounts
 use master;
 drop database StudentManagement
 

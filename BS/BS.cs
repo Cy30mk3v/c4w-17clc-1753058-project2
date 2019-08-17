@@ -83,7 +83,8 @@ namespace Student_Management.BS
             }
             else
             {
-                if (split.Count() == 5)
+                //Console.WriteLine("Check");
+                if (split.Count() == 6)
                 {
                     return Student_list;
                 }

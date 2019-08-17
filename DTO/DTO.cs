@@ -24,6 +24,8 @@ namespace Student_Management.DTO
 
         public string Courses { get; set; }
 
+        public string birthday { get; set; }
+
     }
 
     public class Account

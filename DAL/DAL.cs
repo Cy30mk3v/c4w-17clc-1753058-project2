@@ -55,6 +55,9 @@ namespace Student_Management.DAL
 
                 temp.Social_ID = (values[4]);
                 temp.Class = split[0];
+                temp.birthday = values[5];
+                temp.birthday = temp.birthday.Replace("/", "");
+                temp.birthday = temp.birthday.Replace("-", "");
                 result.Add(temp);
 
             }
@@ -412,8 +415,8 @@ namespace Student_Management.DAL
             OleDbConnection conn = new OleDbConnection();
             conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             conn.Open();
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
+            OleDbCommand cmd = conn.CreateCommand();
+           
             OleDbParameter p1 = new OleDbParameter();
             cmd.Parameters.Add(p1);
             p1.Value = course.codeName;
@@ -430,7 +433,7 @@ namespace Student_Management.DAL
            
             OleDbParameter p4 = new OleDbParameter();
             cmd.Parameters.Add(p4);
-            p1.Value = course.Class;
+            p4.Value = course.Class;
 
 
 
@@ -573,18 +576,24 @@ namespace Student_Management.DAL
             OleDbConnection conn = new OleDbConnection();
             conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             conn.Open();
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
+
+
+            OleDbCommand cmd = conn.CreateCommand();
+            
+            cmd.CommandText =  "INSERT INTO Student (StudentID,Name,Gender,Social_ID,Class) VALUES (?,?,?,?,?)";
+            OleDbParameter p = new OleDbParameter();
+            cmd.Parameters.Add(p);
+            p.Value = S.StudentID;
             OleDbParameter p1 = new OleDbParameter();
             cmd.Parameters.Add(p1);
             p1.Value = S.Name;
 
-            
+
             OleDbParameter p2 = new OleDbParameter();
             cmd.Parameters.Add(p2);
             p2.Value = S.Gender;
 
-            
+
             OleDbParameter p3 = new OleDbParameter();
             cmd.Parameters.Add(p3);
             p3.Value = S.Social_ID;
@@ -593,18 +602,49 @@ namespace Student_Management.DAL
             OleDbParameter p4 = new OleDbParameter();
             cmd.Parameters.Add(p4);
             p4.Value = S.Class;
-            cmd.CommandText =  "INSERT INTO Student (StudentID,Name,Gender,Social_ID,Class) VALUES (?,?,?,?)";
-            
-          
-
-            //Console.WriteLine(pre + post);
-           
             cmd.ExecuteNonQuery();
+            cmd.Parameters.Clear();
             conn.Close();
 
+            OleDbConnection conn1 = new OleDbConnection();
+            conn1.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn1.Open();
+
+
+            OleDbCommand cmd1 = conn1.CreateCommand();
+            cmd1.CommandText = "INSERT INTO Accounts (UserName,PassWord) VALUES (?,?)";
+            OleDbParameter p6 = new OleDbParameter();
+            p6.Value = S.StudentID;
+         
+            OleDbParameter p5 = new OleDbParameter();
+            p5.Value = S.birthday;
+            cmd1.Parameters.Add(p6);
+            cmd1.Parameters.Add(p5);
+            //cmd.Parameters.Add(p5);
+            //Console.WriteLine(pre + post);
+
+           
+            cmd1.ExecuteNonQuery();
+            OleDbConnection conn2 = new OleDbConnection();
+            conn2.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn2.Open();
+            string insert_1 = "INSERT INTO Grade(StudentID, CodeCourse,StudentName,Class)\n";
+            string insert_2 = "SELECT Student.StudentID,Course.codeName,Student.Name,Student.Class \n";
+            string insert_3 = "FROM Student,Course\n";
+            string insert_4 = "WHERE Student.Class = Course.Class AND NOT EXISTS(SELECT G.StudentID, G.CodeCourse ";
+
+            string insert_5 = "FROM Grade G ";
+
+            string insert_6 = "WHERE G.StudentID = Student.StudentID AND G.CodeCourse = Course.codeName)\n";
+            string insert_7 = "GROUP BY codeName,Student.Name,Student.StudentID,Student.ID,Student.Class\n";
+            string insert_8 = "HAVING Student.ID = MAX(Student.ID)";
+            string insert = insert_1 + insert_2 + insert_3 + insert_4 + insert_5 + insert_6 + insert_7 + insert_8;
+
+            OleDbCommand cmd2 = new OleDbCommand(insert, conn1);
+            cmd2.ExecuteNonQuery();
             //string insert = "INSERT INTO Grade(StudentID, CodeCourse) SELECT Student.StudentID,Course.codeName FROM Student,Course WHERE Student.Class = Course.Class GROUP BY codeName,Student.ID,Student.StudentID HAVING Student.ID = MAX(Student.ID)";
-            
-            
+
+
         }
 
         static public void addStudentToGradeList(int StudentID, string StudentName, string Code)
@@ -785,11 +825,14 @@ namespace Student_Management.DAL
             conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             conn.Open();
 
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
+            OleDbCommand cmd = conn.CreateCommand();
+         
             OleDbParameter p1 = new OleDbParameter();
             cmd.Parameters.Add(p1);
             p1.Value = Class;
+            OleDbParameter p2 = new OleDbParameter();
+            cmd.Parameters.Add(p2);
+            p2.Value = Class;
             cmd.CommandText = "select DISTINCT G.CodeCourse from Grade G WHERE G.Sub_Class =? OR G.Class=?";
 
             OleDbDataReader rd = cmd.ExecuteReader();
@@ -940,9 +983,9 @@ namespace Student_Management.DAL
             conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             conn.Open();
 
-            
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
+
+            OleDbCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "UPDATE Grade SET Mid_Term=?,Final_Term=?,Other_Grade=?,Sum_Grade=? WHERE Grade.StudentID =? AND (Grade.Class=? OR Grade.Sub_Class= ? )";
             OleDbParameter p1 = new OleDbParameter();
             cmd.Parameters.Add(p1);
             p1.Value = G.Mid_Term;
@@ -975,7 +1018,7 @@ namespace Student_Management.DAL
             OleDbParameter p7 = new OleDbParameter();
             cmd.Parameters.Add(p7);
             p7.Value = G.Sub_Class;
-            cmd.CommandText = "UPDATE Grade SET Mid_Term=?,Final_Term=?,Other_Grade=?,Sum_Grade=? WHERE Grade.StudentID =? AND (Grade.Class=?OR Grade.Sub_Class=?)";
+           
          
             cmd.ExecuteNonQuery();
             conn.Close();
@@ -988,8 +1031,8 @@ namespace Student_Management.DAL
             conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             conn.Open();
 
-            OleDbCommand cmd = new OleDbCommand();
-            cmd.Connection = conn;
+            OleDbCommand cmd = conn.CreateCommand();
+     
             OleDbParameter p1 = new OleDbParameter();
             cmd.Parameters.Add(p1);
             p1.Value = course_code;
@@ -997,6 +1040,10 @@ namespace Student_Management.DAL
             OleDbParameter p2 = new OleDbParameter();
             cmd.Parameters.Add(p2);
             p2.Value = Class;
+
+            OleDbParameter p3 = new OleDbParameter();
+            cmd.Parameters.Add(p3);
+            p3.Value = Class;
             cmd.CommandText = "SELECT * FROM  Grade WHERE Grade.CodeCourse=? AND (Grade.Class=? OR Grade.Sub_Class=?)";
             //Console.WriteLine(cmd.CommandText);
             OleDbDataReader rd = cmd.ExecuteReader();
