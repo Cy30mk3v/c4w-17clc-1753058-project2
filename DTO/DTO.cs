@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Student_Management.DTO
 { 
+
+    
     public class Teacher
     {
         public string name { get; set; }

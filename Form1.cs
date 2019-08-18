@@ -18,13 +18,15 @@ namespace Student_Management
     {
         public string username { get; set; }
         public string password { get; set; }
+        public string SQL { get; set; }
         public Form1()
         {
             InitializeComponent();
-            this.Text="Student management 17CLC1";
+            this.Text="Student management";
 
             //this.label1.Font = new Font("Arial", 20);
             textBox2.PasswordChar = '*';
+            textBox3.Text= "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
             this.Icon = Student_Management.Properties.Resources._1_28_512;
         }
 
@@ -32,7 +34,10 @@ namespace Student_Management
         {
 
         }
-
+        public string getSQL()
+        {
+            return SQL;
+        }
         private void PictureBox1_Click(object sender, EventArgs e)
         {
 
@@ -52,6 +57,7 @@ namespace Student_Management
         {
             username = textBox1.Text;
             password = textBox2.Text;
+            Report.SQL = textBox3.Text;
             List<Account> accounts = new List<Account>();
             accounts = Report.GetAccountsFromDB();
 
@@ -78,19 +84,7 @@ namespace Student_Management
         }
 
 
-        private void addStudentListToView(ListView list,List<Student> students)
-        {
-            foreach(Student student in students)
-            {
-                ListViewItem temp = new ListViewItem(student.ID.ToString());
-                temp.SubItems.Add(student.StudentID.ToString());
-                temp.SubItems.Add(student.Name);
-                temp.SubItems.Add(student.Gender.ToString());
-                temp.SubItems.Add(student.Social_ID);
-                list.Items.Add(temp);
-
-            }
-        }
+        
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             
@@ -149,6 +143,12 @@ namespace Student_Management
         private void Button1_Click_1(object sender, EventArgs e)
         {
             Button1_Click(sender, e);
+        }
+
+        private void TextBox3_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip(this.textBox3,"Input your connect string");
+            //toolTip1.SetToolTip(this.textBox3, "Input your connect string");
         }
     }
 }

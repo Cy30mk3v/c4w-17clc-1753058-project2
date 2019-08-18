@@ -51,6 +51,9 @@ namespace Student_Management
                 temp.SubItems.Add(g.Sum_Grade.ToString());
                 listView2.Items.Add(temp);
             }
+            float percent = float.Parse(label13.Text) / float.Parse(label12.Text);
+            decimal result = Math.Round((Decimal)percent*100, 2);
+            label17.Text = result.ToString() + "%";
             listView1.Update();
             listView2.Update();
         }

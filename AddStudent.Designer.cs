@@ -193,7 +193,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "AddStudent";
-            this.Text = "AddStudent";
+            this.Text = "Add Student";
             this.Load += new System.EventHandler(this.AddStudent_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

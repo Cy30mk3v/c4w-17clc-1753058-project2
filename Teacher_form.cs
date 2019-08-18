@@ -90,7 +90,7 @@ namespace Student_Management
                     List<Grade> grades = new List<Grade>();
                     grades = Report.GetListCourse_Class_List(path);
 
-                    Console.WriteLine(grades.Count() + "------------------");
+                   // Console.WriteLine(grades.Count() + "------------------");
                     foreach (Grade G in grades)
                     {
                         Report.addCourse_Class_List_EToDB(G);
@@ -100,8 +100,12 @@ namespace Student_Management
                 if(Business.checkCSV(path)==Business.Grade_list)
                 {
                     List<Grade> grades = new List<Grade>();
+                   
+                    //List<Grade> grades1 = new List<Grade>();
                     grades = Report.GetGrades(path);
-                    foreach(Grade G in grades)
+                    //string Class = grades[0].Main_Class;
+                   
+                    foreach (Grade G in grades)
                     {
                         Report.addGradeToDB(G);
                     }
@@ -205,6 +209,7 @@ namespace Student_Management
         {
             listView1.Items.Clear();
             comboBox1.Items.Clear();
+            comboBox3.Items.Clear();
             if (comboBox2.Text=="Student list" || comboBox2.Text == "Time-table list")
             {
                 
@@ -386,7 +391,7 @@ namespace Student_Management
             }
             if(comboBox2.Text=="Grade list")
             {
-                Console.WriteLine("Right grade?");
+                //Console.WriteLine("Right grade?");
                 List<Grade> grades = new List<Grade>();
                 grades = Report.GetGradesFromDB(comboBox1.Text, comboBox3.Text);
                 listView1.Items.Clear();
@@ -426,7 +431,7 @@ namespace Student_Management
         {
             string Class = comboBox1.Text;
             List<Class> courses = new List<Class>();
-            Console.WriteLine("Changed!");
+            //Console.WriteLine("Changed!");
             comboBox3.Items.Clear();
             courses = Report.GetClassesforCCL_DB(Class);
             foreach (Class C in courses)
@@ -434,7 +439,7 @@ namespace Student_Management
                 Console.WriteLine(C.Name);
                 comboBox3.Items.Add(C.Name);
             }
-           
+            comboBox3.Update();
         }
 
         private void Button7_Click(object sender, EventArgs e)

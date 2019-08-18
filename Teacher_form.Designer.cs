@@ -269,7 +269,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Teacher_form";
-            this.Text = "Form2";
+            this.Text = "Administrator";
             this.Load += new System.EventHandler(this.Teacher_Load);
             this.add_StudentMenu.ResumeLayout(false);
             this.Grade_retype.ResumeLayout(false);

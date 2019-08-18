@@ -54,6 +54,7 @@
             this.columnHeader5,
             this.columnHeader6,
             this.columnHeader7});
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(13, 13);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(666, 425);
@@ -166,7 +167,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Student_form";
-            this.Text = "Student_form";
+            this.Text = "Student";
             this.ResumeLayout(false);
             this.PerformLayout();
 

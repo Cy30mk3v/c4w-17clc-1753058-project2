@@ -13,6 +13,7 @@ namespace Student_Management.DAL
 {
     public class Report
     {
+        static public string SQL { get; set; }
         /*Only for Course list*/
         static public void getClassAndCourse(string path, out string Class, out string Course)
         {
@@ -96,7 +97,7 @@ namespace Student_Management.DAL
         {
             string name = null;
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = conn.CreateCommand();
@@ -128,7 +129,7 @@ namespace Student_Management.DAL
         {
             string name = null;
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = conn.CreateCommand();
@@ -197,7 +198,7 @@ namespace Student_Management.DAL
         static public void removeStudentFromCourse(int studentID, string code, string Class)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = conn.CreateCommand();
@@ -222,7 +223,7 @@ namespace Student_Management.DAL
         static public void addAccount(string StudentID, string birthday)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = conn.CreateCommand();
@@ -243,7 +244,7 @@ namespace Student_Management.DAL
         static public List<Grade> GetGradesFromDB_CCL()
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -252,7 +253,7 @@ namespace Student_Management.DAL
 
             OleDbDataReader rd = cmd.ExecuteReader();
             List<Grade> grades = new List<Grade>();
-            int i = 1;
+            
             while (rd.Read())
             {
                 var temp = new Grade();
@@ -284,7 +285,7 @@ namespace Student_Management.DAL
                 }
             }
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
             OleDbCommand cmd = conn.CreateCommand();
             cmd.Connection = conn;
@@ -330,7 +331,7 @@ namespace Student_Management.DAL
         static public void changePassword(string username, string newPass)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -354,7 +355,7 @@ namespace Student_Management.DAL
         static public void updateGrade(string studentID, string Course, float P1, float P2, float P3, float P4)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -413,7 +414,7 @@ namespace Student_Management.DAL
                 return;
             }
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
             OleDbCommand cmd = conn.CreateCommand();
            
@@ -448,7 +449,7 @@ namespace Student_Management.DAL
             conn.Close();
 
             OleDbConnection conn1 = new OleDbConnection();
-            conn1.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn1.ConnectionString = SQL;
             conn1.Open();
             string insert_1 = "INSERT INTO Grade(StudentID, CodeCourse,StudentName,Class)\n";
             string insert_2 = "SELECT Student.StudentID,Course.codeName,Student.Name,Student.Class \n";
@@ -471,7 +472,7 @@ namespace Student_Management.DAL
        static public void DeleteGradeL(string Class, string Course)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -503,7 +504,7 @@ namespace Student_Management.DAL
         static public List<Course> getCourseFromDB()
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -537,7 +538,7 @@ namespace Student_Management.DAL
                     return;
             }
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
             OleDbCommand cmd = new OleDbCommand();
             cmd.Connection = conn;
@@ -574,7 +575,7 @@ namespace Student_Management.DAL
                 return;
             }
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
 
@@ -607,7 +608,7 @@ namespace Student_Management.DAL
             conn.Close();
 
             OleDbConnection conn1 = new OleDbConnection();
-            conn1.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn1.ConnectionString = SQL;
             conn1.Open();
 
 
@@ -625,33 +626,47 @@ namespace Student_Management.DAL
 
            
             cmd1.ExecuteNonQuery();
+            conn1.Close();
+
             OleDbConnection conn2 = new OleDbConnection();
-            conn2.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn2.ConnectionString = SQL;
             conn2.Open();
-            string insert_1 = "INSERT INTO Grade(StudentID, CodeCourse,StudentName,Class)\n";
-            string insert_2 = "SELECT Student.StudentID,Course.codeName,Student.Name,Student.Class \n";
-            string insert_3 = "FROM Student,Course\n";
-            string insert_4 = "WHERE Student.Class = Course.Class AND NOT EXISTS(SELECT G.StudentID, G.CodeCourse ";
+            List<Course> courses = new List<Course>();
+            courses = GetCourseFromDB_Class(S.Class);
+            foreach (Course C in courses)
+            {
+                //Console.WriteLine(C.codeName + "HAHHAHAH");
+                
+               
+                OleDbCommand cmd2 = conn2.CreateCommand();
+                cmd2.CommandText = "INSERT INTO Grade(StudentID, CodeCourse, StudentName, Class) VALUES (?,?,?,?)";
+                OleDbParameter p_1 = new OleDbParameter();
+                p_1.Value = S.StudentID;
+                cmd2.Parameters.Add(p_1);
 
-            string insert_5 = "FROM Grade G ";
+                OleDbParameter p_2 = new OleDbParameter();
+                p_2.Value = C.codeName;
+                cmd2.Parameters.Add(p_2);
 
-            string insert_6 = "WHERE G.StudentID = Student.StudentID AND G.CodeCourse = Course.codeName)\n";
-            string insert_7 = "GROUP BY codeName,Student.Name,Student.StudentID,Student.ID,Student.Class\n";
-            string insert_8 = "HAVING Student.ID = MAX(Student.ID)";
-            string insert = insert_1 + insert_2 + insert_3 + insert_4 + insert_5 + insert_6 + insert_7 + insert_8;
+                OleDbParameter p_3 = new OleDbParameter();
+                p_3.Value = S.Name;
+                cmd2.Parameters.Add(p_3);
 
-            OleDbCommand cmd2 = new OleDbCommand(insert, conn1);
-            cmd2.ExecuteNonQuery();
-            //string insert = "INSERT INTO Grade(StudentID, CodeCourse) SELECT Student.StudentID,Course.codeName FROM Student,Course WHERE Student.Class = Course.Class GROUP BY codeName,Student.ID,Student.StudentID HAVING Student.ID = MAX(Student.ID)";
+                OleDbParameter p_4 = new OleDbParameter();
+                p_4.Value = S.Class;
+                cmd2.Parameters.Add(p_4);
 
-
+                cmd2.ExecuteNonQuery();
+               
+            }
+            conn2.Close();
         }
 
         static public void addStudentToGradeList(int StudentID, string StudentName, string Code)
         {
 
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -677,7 +692,7 @@ namespace Student_Management.DAL
 
             
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -705,7 +720,7 @@ namespace Student_Management.DAL
         static public List<Student> GetStudentFromDB_Class(string Class)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -747,7 +762,7 @@ namespace Student_Management.DAL
         static public int GetStudentID(string name)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -770,7 +785,7 @@ namespace Student_Management.DAL
         static public string GetCourseIDandClass(string name)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
             OleDbCommand cmd = new OleDbCommand();
             cmd.Connection = conn;
@@ -791,7 +806,7 @@ namespace Student_Management.DAL
         static public List<Course> GetCourseFromDB_Class(string Class)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -822,7 +837,7 @@ namespace Student_Management.DAL
         static public List<Class> GetClassesforCCL_DB(string Class)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = conn.CreateCommand();
@@ -851,7 +866,7 @@ namespace Student_Management.DAL
         static public List<Student> GetStudentFromDB()
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -888,7 +903,7 @@ namespace Student_Management.DAL
         static public List<Class> GetClassFromDB()
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -980,16 +995,16 @@ namespace Student_Management.DAL
                 return;
             }
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
 
             OleDbCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "UPDATE Grade SET Mid_Term=?,Final_Term=?,Other_Grade=?,Sum_Grade=? WHERE Grade.StudentID =? AND (Grade.Class=? OR Grade.Sub_Class= ? )";
+            cmd.CommandText = "UPDATE Grade SET Mid_Term=?,Final_Term=?,Other_Grade=?,Sum_Grade=? WHERE Grade.StudentID =? AND Grade.CodeCourse = ? AND (Grade.Class=? OR Grade.Sub_Class= ? )";
             OleDbParameter p1 = new OleDbParameter();
             cmd.Parameters.Add(p1);
             p1.Value = G.Mid_Term;
-
+            
           
             OleDbParameter p2 = new OleDbParameter();
             cmd.Parameters.Add(p2);
@@ -1009,7 +1024,10 @@ namespace Student_Management.DAL
             cmd.Parameters.Add(p5);
             p5.Value = G.StudentID;
 
-            
+            OleDbParameter add = new OleDbParameter();
+            cmd.Parameters.Add(add);
+            add.Value = G.CodeCourse;
+
             OleDbParameter p6 = new OleDbParameter();
             cmd.Parameters.Add(p6);
             p6.Value = G.Main_Class;
@@ -1028,7 +1046,7 @@ namespace Student_Management.DAL
         {
             List<Grade> results = new List<Grade>();
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = conn.CreateCommand();
@@ -1063,7 +1081,7 @@ namespace Student_Management.DAL
         static public List<Class> GetClassFromDB_Course()
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -1086,7 +1104,7 @@ namespace Student_Management.DAL
         static public List<Student> GetStudentsFromCCL_DB(string code, string Class)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
@@ -1123,7 +1141,7 @@ namespace Student_Management.DAL
         static public List<Grade> getStudentGrade(int studentID)
         {
             OleDbConnection conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=SQLNCLI11;Server=DESKTOP-SS8KMOM;Database=StudentManagement;Trusted_Connection=Yes;";
+            conn.ConnectionString = SQL;
             conn.Open();
 
             OleDbCommand cmd = new OleDbCommand();
